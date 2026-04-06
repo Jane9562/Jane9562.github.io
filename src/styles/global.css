@@ -1,0 +1,407 @@
+:root {
+  --bg: #f7f2eb;
+  --surface: rgba(255, 252, 248, 0.78);
+  --text: #2a2f2d;
+  --muted: #5f6964;
+  --line: rgba(71, 82, 74, 0.16);
+  --sage-deep: #4c6350;
+  --gold: #b58d5b;
+  --shadow: 0 24px 60px rgba(93, 84, 67, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: "Manrope", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(181, 141, 91, 0.16), transparent 24%),
+    radial-gradient(circle at 80% 18%, rgba(122, 141, 123, 0.18), transparent 20%),
+    linear-gradient(180deg, #fbf7f1 0%, #f2ece4 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 80%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 32px 0 96px;
+}
+
+.hero,
+.section-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+.hero-copy,
+.hero-card,
+.prose-card,
+.strength-card,
+.project-card,
+.timeline,
+.contact-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow);
+}
+
+.hero-copy {
+  padding: 52px;
+}
+
+.eyebrow,
+.card-label,
+.timeline-period,
+.project-meta,
+.kicker {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+}
+
+.eyebrow,
+.card-label,
+.project-meta {
+  color: var(--sage-deep);
+}
+
+.kicker {
+  margin: 12px 0 20px;
+  color: var(--gold);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  max-width: 10ch;
+  font-size: clamp(3.2rem, 8vw, 5.8rem);
+  line-height: 0.95;
+}
+
+h2 {
+  font-size: clamp(2.1rem, 4vw, 3.3rem);
+  line-height: 1;
+}
+
+h3 {
+  font-size: 1.8rem;
+  line-height: 1.05;
+}
+
+.lead,
+.supporting,
+.prose-card p,
+.strength-card p,
+.project-card p,
+.timeline-item p,
+.contact-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.lead {
+  max-width: 55ch;
+  margin-top: 28px;
+  font-size: 1.05rem;
+}
+
+.supporting {
+  max-width: 46ch;
+  margin-top: 18px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 132px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.button:hover,
+.contact-links a:hover {
+  transform: translateY(-2px);
+}
+
+.button-primary {
+  color: #f8f4ee;
+  background: linear-gradient(135deg, var(--sage-deep), #304136);
+  border-color: transparent;
+}
+
+.button-secondary {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.hero-card {
+  padding: 32px;
+  align-self: end;
+  background:
+    linear-gradient(180deg, rgba(255, 252, 248, 0.88), rgba(244, 236, 226, 0.84)),
+    radial-gradient(circle at top right, rgba(181, 141, 91, 0.22), transparent 34%);
+}
+
+.hero-card h2 {
+  margin-top: 12px;
+}
+
+.hero-card p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.hero-card ul {
+  margin: 26px 0 0;
+  padding-left: 18px;
+  color: var(--text);
+  line-height: 2;
+}
+
+.section-heading {
+  padding: 26px 10px 0 4px;
+}
+
+.section-note {
+  margin-top: 18px;
+  max-width: 32ch;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.prose-card {
+  padding: 34px;
+  display: grid;
+  gap: 16px;
+}
+
+.strength-grid,
+.project-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.strength-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.strength-card {
+  padding: 28px;
+  min-height: 220px;
+}
+
+.strength-card h3,
+.project-card h3,
+.timeline-item h3 {
+  margin-bottom: 14px;
+}
+
+.project-section {
+  align-items: start;
+}
+
+.project-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.project-card {
+  padding: 28px;
+  min-height: 320px;
+  background:
+    radial-gradient(circle at top right, rgba(122, 141, 123, 0.18), transparent 26%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(247, 241, 232, 0.94));
+}
+
+.project-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.project-summary {
+  margin-bottom: 14px;
+  font-size: 1rem;
+}
+
+.project-detail {
+  font-size: 0.95rem;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.tag {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(76, 99, 80, 0.2);
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--sage-deep);
+  font-size: 0.84rem;
+}
+
+.timeline {
+  padding: 24px 28px;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.timeline-item:last-child {
+  border-bottom: none;
+}
+
+.timeline-period {
+  margin: 4px 0 0;
+  color: var(--gold);
+}
+
+.contact-section {
+  margin-bottom: 0;
+}
+
+.contact-card {
+  padding: 32px;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 26px 0 18px;
+}
+
+.contact-links a {
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.48);
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.contact-mail {
+  color: var(--sage-deep);
+}
+
+@media (max-width: 960px) {
+  .hero,
+  .section-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    padding: 10px 0 0;
+  }
+
+  .strength-grid,
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    width: min(100% - 1rem, 1120px);
+    padding-top: 16px;
+    padding-bottom: 56px;
+  }
+
+  .hero-copy,
+  .hero-card,
+  .prose-card,
+  .strength-card,
+  .project-card,
+  .timeline,
+  .contact-card {
+    border-radius: 24px;
+  }
+
+  .hero-copy,
+  .hero-card,
+  .prose-card,
+  .strength-card,
+  .project-card,
+  .contact-card {
+    padding: 24px;
+  }
+
+  .timeline {
+    padding: 20px 24px;
+  }
+
+  .timeline-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  h1 {
+    font-size: clamp(2.7rem, 16vw, 4.4rem);
+  }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+}
