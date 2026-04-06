@@ -1,8 +1,8 @@
 ---
-title: 关于我
-description: 这里是我的个人介绍、能力结构，以及我为什么想把内容表达和 AI 项目放在同一个站点里。
-date: 2026-04-06
-updated: 2026-04-06
+title: 关于
+description: 这里记录我是谁、这个博客在做什么，以及如何和我交流。
+date: 2026-03-29
+updated: 2026-03-29
 ---
 
 import AboutDialog from "@/components/AboutDialog.svelte";
@@ -15,123 +15,113 @@ export const aboutAuthorAvatar = avatar.src;
 export const aboutDialogNodes = [
   {
     id: "intro",
-    text: "你好，欢迎来到这里。你可以把这个页面当作一份更有温度的个人介绍。",
+    text: "你好，欢迎来到关于页面。想先了解哪一部分？",
     options: [
       {
         label: "你是谁？",
-        reply: "先从你的背景开始吧。",
+        reply: "先介绍一下你自己吧。",
         nextId: "identity",
       },
       {
-        label: "你会做什么？",
-        reply: "我更想了解你的能力结构。",
-        nextId: "abilities",
+        label: "这个博客在写什么？",
+        reply: "这个站点主要会分享什么内容？",
+        nextId: "blog",
       },
       {
-        label: "你为什么做 AI 项目？",
-        reply: "我想知道你和 AI 的关系。",
-        nextId: "ai",
+        label: "技术栈是什么？",
+        reply: "这个站点是怎么搭建的？",
+        nextId: "stack",
       },
       {
         label: "怎么联系你？",
-        reply: "如果我想合作，可以从哪里找到你？",
+        reply: "如果我想联系你，应该怎么做？",
         nextId: "contact",
       },
     ],
   },
   {
     id: "identity",
-    text: "我是一个更偏内容与表达取向的人，关注写作、研究、网页叙事和项目呈现，也希望把这些能力慢慢组织成更清晰的个人作品体系。",
+    text: "我是一名喜欢写作和折腾前端体验的开发者。这里主要记录实践、思考与长期维护过程中的经验。",
     options: [
       {
-        label: "继续：你在意什么？",
-        reply: "你最看重的工作方式是什么？",
+        label: "继续：你平时最关注什么？",
+        reply: "你平时最关注哪些方向？",
         nextId: "focus",
       },
       {
-        label: "回到目录",
-        reply: "我换一个问题。",
+        label: "返回话题菜单",
+        reply: "换个话题。",
         nextId: "intro",
       },
     ],
   },
   {
     id: "focus",
-    text: "我在意信息是否被整理清楚、语言是否有节奏、页面是否能传达气质，也在意一个作品是不是既能表达自己，又能被别人快速理解。",
+    text: "我更关注：可维护的内容结构、可读性高的代码、以及长期可演进的主题与组件设计。",
     options: [
       {
-        label: "回到目录",
-        reply: "继续看看别的部分。",
+        label: "返回话题菜单",
+        reply: "明白了，回到主菜单。",
         nextId: "intro",
       },
     ],
   },
   {
-    id: "abilities",
-    text: "我能做的事情通常落在这几个方向上：内容策划、资料整理、专题叙事、AI 辅助创作、网页表达，以及把这些东西组合成一个完整项目。",
+    id: "blog",
+    text: "内容会覆盖 Astro、Svelte、工程化实践、主题设计，以及一些开发过程中的踩坑和复盘。",
     options: [
       {
-        label: "继续：你的项目长什么样？",
-        reply: "那你通常会做出怎样的成果？",
-        nextId: "project-shape",
-      },
-      {
-        label: "回到目录",
-        reply: "先回到前面。",
+        label: "返回话题菜单",
+        reply: "了解了，看看其他问题。",
         nextId: "intro",
       },
     ],
   },
   {
-    id: "project-shape",
-    text: "我的项目不只是工具演示，更像是一个完整的表达单元。它可能是一份研究档案、一个专题页、一套内容栏目，也可能是一份更好看的网页简历。",
+    id: "stack",
+    text: "当前站点使用 Astro + Svelte，运行时以 Bun 为主；并且会保持文章页面、搜索与组件交互体验的一致性。",
     options: [
       {
-        label: "回到目录",
-        reply: "明白了，我再看看别的。",
-        nextId: "intro",
-      },
-    ],
-  },
-  {
-    id: "ai",
-    text: "我不想把 AI 只当作噱头，而是把它当作工作流的一部分。它可以帮助我梳理信息、延展创意、搭建初稿，但最后的判断、审美和表达仍然需要我自己完成。",
-    options: [
-      {
-        label: "回到目录",
-        reply: "这个回答很清楚。",
+        label: "返回话题菜单",
+        reply: "技术栈很清晰，回到主菜单。",
         nextId: "intro",
       },
     ],
   },
   {
     id: "contact",
-    text: "你可以通过 GitHub、邮箱，或者我后续补充的社交平台联系我。这个站点之后也会继续补充更完整的项目页面和简历内容。",
+    text: "你可以通过评论区或社交链接联系我。通常我会优先回复和文章主题相关的问题与建议。",
     options: [
       {
-        label: "回到目录",
-        reply: "好，我继续逛逛。",
+        label: "返回话题菜单",
+        reply: "收到，我再看看其他内容。",
         nextId: "intro",
       },
     ],
   },
 ];
 
-这里不想写成一份很硬的简历，而是更像一张可以慢慢展开的个人名片。
+你好，欢迎来到这里。
 
-我希望它至少能回答三件事：
+这个页面会长期维护，主要包含三部分：
 
-1. 我是谁，我在意什么样的表达与项目。
-2. 我能做什么，以及这些能力会怎样组合成真实成果。
-3. 为什么我会对 AI 项目、内容叙事和网页展示这三件事同时感兴趣。
+1. 我是谁，以及我在持续关注什么。
+2. 这个博客会写什么、怎么写、为什么这样写。
+3. 如果你想交流，可以通过哪些方式联系我。
+
+为了减少“一次性介绍信息”带来的阅读负担，下面放了一个可交互的对话组件。你可以点击不同选项查看对应回复。
 
 <AboutDialog
   client:load
-  title="快速了解我"
-  intro="从下面的问题开始，会比一段平铺直叙的自我介绍更轻松一点。"
+  title="快速对话"
+  intro="选择一个回复选项继续对话。你可以在 about.mdx 里预先定义分支与回复。"
   authorName={aboutAuthorName}
   authorAvatar={aboutAuthorAvatar}
   nodes={aboutDialogNodes}
 />
 
-你之后可以继续修改这个页面，把教育经历、实习、合作项目、获奖和技能结构慢慢加进来。
+你可以直接编辑 `src/content/about.mdx` 里的 `aboutDialogNodes` 来预先定义：
+
+- 对话内容（每个节点的文本）
+- 可选回复（每个按钮）
+- 对应回复（按钮跳转到哪个节点）

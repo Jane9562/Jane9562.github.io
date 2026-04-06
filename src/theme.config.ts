@@ -1,8 +1,9 @@
+// cannot use path alias here because unocss can not resolve it
 import { defineConfig } from "./toolkit/themeConfig";
 
 export default defineConfig({
-  siteName: "萧秀云",
-  locale: "zh-CN",
+  siteName: "ShokaX",
+  locale: "zh-CN", // 网站语言: "zh-CN" | "en"
   nav: [
     {
       href: "/",
@@ -10,7 +11,7 @@ export default defineConfig({
       icon: "i-ri-home-line",
     },
     {
-      text: "关于我",
+      text: "关于",
       href: "/about/",
       icon: "i-ri-user-3-line",
     },
@@ -40,9 +41,9 @@ export default defineConfig({
       },
     },
     {
-      text: "项目",
-      href: "/projects/",
-      icon: "i-ri-layout-grid-line",
+      text: "友链",
+      href: "/friends/",
+      icon: "i-ri-link",
     },
     {
       text: "动态",
@@ -51,35 +52,44 @@ export default defineConfig({
     },
   ],
   brand: {
-    title: "萧秀云",
-    subtitle: "内容、表达、AI 项目",
-    logo: "萧",
+    title: "ShokaX",
+    subtitle: "A modern blog theme",
+    logo: "✨",
   },
   cover: {
     enable: true,
     preload: true,
+    // 固定封面模式（可选）：
+    // - enable: 是否启用固定封面
+    // - url: 推荐填 "cover-1" ~ "cover-6"（来自 src/components/Images.astro 预设），
+    //        或者填 public 路径/远程 URL（会使用 <img> 兜底渲染）
     fixedCover: {
       enable: true,
       url: "cover-4",
     },
-    nextGradientCover: false,
+    // gradient: true, // 渐变模式
+    nextGradientCover: false, // 文章导航使用渐变背景
   },
   sidebar: {
-    author: "萧秀云",
-    description: "一个以内容表达、个人叙事和 AI 项目实践为中心的个人站点。",
+    author: "Your Name",
+    description: "A brief introduction",
     social: {
       github: {
-        url: "https://github.com/Jane9562",
+        url: "https://github.com/yourname",
         icon: "i-ri-github-fill",
       },
+      twitter: {
+        url: "https://twitter.com/yourname",
+        icon: "i-ri-twitter-x-line",
+      },
       email: {
-        url: "mailto:hello@example.com",
+        url: "mailto:your@email.com",
         icon: "i-ri-mail-line",
       },
     },
   },
   footer: {
-    since: 2026,
+    since: 2025,
     icon: {
       name: "sakura rotate",
       color: "var(--color-pink)",
@@ -87,9 +97,12 @@ export default defineConfig({
     count: true,
     powered: true,
     icp: {
-      enable: false,
-      icpnumber: "",
-      icpurl: "",
+      enable: true,
+      // icon: '/beian-icon.png',
+      icpnumber: "津ICP备2022001375号",
+      icpurl: "https://beian.miit.gov.cn/",
+      // beian: '网安备案号',
+      // recordcode: 'xxxxx',
     },
   },
   tagCloud: {
@@ -98,26 +111,35 @@ export default defineConfig({
   },
   widgets: {
     randomPosts: true,
-    recentComments: false,
-    recentCommentsLimit: 0,
+    recentComments: true,
+    recentCommentsLimit: 10,
   },
   comments: {
     enable: false,
     waline: {
+      // 替换为你的 Waline 服务端地址，例如: https://comments.example.com
       serverURL: "",
+      // 推荐与站点语言保持一致
       lang: "zh-CN",
     },
   },
   hyc: {
+    // HYC 扩展总开关：关闭后其所有子功能不可用
     enable: false,
     aiSummary: {
+      // AI 摘要卡片开关（受 hyc.enable 总开关控制）
       enable: true,
+      // 卡片标题
       title: "AI 摘要",
+      // 是否显示摘要使用的模型名称
       showModel: true,
     },
     aiRecommend: {
+      // AI 相近文章推荐开关（受 hyc.enable 总开关控制）
       enable: true,
+      // 默认展示前 3 篇
       limit: 3,
+      // 最低相似度阈值（0.4 = 40%）
       minSimilarity: 0.4,
     },
   },
@@ -134,12 +156,12 @@ export default defineConfig({
   },
   visibilityTitle: {
     enable: true,
-    leaveTitle: "先去忙吧，我会在这里等你回来",
-    returnTitle: "欢迎回来",
+    leaveTitle: "👀 你先忙，我等你回来~",
+    returnTitle: "🎉 欢迎回来！",
     restoreDelay: 3000,
   },
   home: {
-    selectedCategories: [],
+    selectedCategories: [{ name: "Tutorial" }, { name: "Frontend" }],
     pageSize: 5,
     title: {
       behavior: "default",
@@ -159,40 +181,45 @@ export default defineConfig({
     },
   },
   friends: {
-    title: "项目",
-    description: "把 AI 工具、内容表达和网页叙事组合成可以被看见的作品。",
+    title: "友链",
+    description: "卡片式展示，支持站点预览与主题色点缀。",
+    // avatar: "https://example.com/your-avatar.png",
+    // color: "var(--color-pink)",
+    // siteImage: "https://example.com/your-site-preview.png",
     links: [
       {
-        url: "https://github.com/Jane9562",
-        title: "AI 选题研究档案",
-        desc: "把热点、案例和观点整理成可持续更新的选题资料库，用于写作、策划和内容孵化。",
-        author: "萧秀云",
-        avatar: "https://avatars.githubusercontent.com/u/122607221?v=4",
+        url: "https://astro.build/",
+        title: "Astro",
+        desc: "全站体验轻快的静态站点框架，适合内容型站点与博客。",
+        author: "Astro Team",
+        avatar: "https://avatars.githubusercontent.com/u/44914786?s=200&v=4",
+        color: "var(--color-orange)",
+        siteImage: "https://astro.build/assets/press/astro-logo-dark.svg",
+      },
+      {
+        url: "https://svelte.dev/",
+        title: "Svelte",
+        desc: "编译时框架，现代与简洁，组件写起来很顺手。",
+        author: "Svelte Team",
+        avatar: "https://avatars.githubusercontent.com/u/23617963?s=200&v=4",
+        color: "var(--color-red)",
+      },
+      {
+        url: "https://vite.dev/",
+        title: "Vite",
+        desc: "快速的前端开发构建工具，HMR 体验很棒。",
+        author: "Vite Team",
+        avatar: "https://avatars.githubusercontent.com/u/65625612?s=200&v=4",
         color: "var(--color-blue)",
       },
       {
-        url: "https://github.com/Jane9562",
-        title: "AI 视觉叙事专题页",
-        desc: "围绕一个文化主题，把文字、图像和网页结构组合成可浏览的专题型作品。",
-        author: "萧秀云",
-        avatar: "https://avatars.githubusercontent.com/u/122607221?v=4",
-        color: "var(--color-pink)",
-      },
-      {
-        url: "https://github.com/Jane9562",
-        title: "个人品牌内容实验",
-        desc: "通过栏目设计、表达风格和 AI 辅助改写，搭出一套更稳定的个人品牌内容结构。",
-        author: "萧秀云",
-        avatar: "https://avatars.githubusercontent.com/u/122607221?v=4",
-        color: "var(--color-orange)",
-      },
-      {
-        url: "https://github.com/Jane9562",
-        title: "网页简历与作品集",
-        desc: "以个人叙事为骨架，把简历、能力和项目展示放进同一个更完整的线上入口里。",
-        author: "萧秀云",
-        avatar: "https://avatars.githubusercontent.com/u/122607221?v=4",
+        url: "https://bun.sh/",
+        title: "Bun",
+        desc: "一体化 JavaScript 运行时，速度与工具链兼备。",
+        author: "Bun Team",
+        avatar: "https://avatars.githubusercontent.com/u/108928776?s=200&v=4",
         color: "var(--color-green)",
+        siteImage: "https://bun.sh/logo.svg",
       },
     ],
   },
