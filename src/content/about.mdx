@@ -1,0 +1,137 @@
+---
+title: 关于我
+description: 这里是我的个人介绍、能力结构，以及我为什么想把内容表达和 AI 项目放在同一个站点里。
+date: 2026-04-06
+updated: 2026-04-06
+---
+
+import AboutDialog from "@/components/AboutDialog.svelte";
+import themeConfig from "@/theme.config";
+import { avatar } from "@/components/Images.astro";
+
+export const aboutAuthorName = themeConfig.sidebar?.author || "作者";
+export const aboutAuthorAvatar = avatar.src;
+
+export const aboutDialogNodes = [
+  {
+    id: "intro",
+    text: "你好，欢迎来到这里。你可以把这个页面当作一份更有温度的个人介绍。",
+    options: [
+      {
+        label: "你是谁？",
+        reply: "先从你的背景开始吧。",
+        nextId: "identity",
+      },
+      {
+        label: "你会做什么？",
+        reply: "我更想了解你的能力结构。",
+        nextId: "abilities",
+      },
+      {
+        label: "你为什么做 AI 项目？",
+        reply: "我想知道你和 AI 的关系。",
+        nextId: "ai",
+      },
+      {
+        label: "怎么联系你？",
+        reply: "如果我想合作，可以从哪里找到你？",
+        nextId: "contact",
+      },
+    ],
+  },
+  {
+    id: "identity",
+    text: "我是一个更偏内容与表达取向的人，关注写作、研究、网页叙事和项目呈现，也希望把这些能力慢慢组织成更清晰的个人作品体系。",
+    options: [
+      {
+        label: "继续：你在意什么？",
+        reply: "你最看重的工作方式是什么？",
+        nextId: "focus",
+      },
+      {
+        label: "回到目录",
+        reply: "我换一个问题。",
+        nextId: "intro",
+      },
+    ],
+  },
+  {
+    id: "focus",
+    text: "我在意信息是否被整理清楚、语言是否有节奏、页面是否能传达气质，也在意一个作品是不是既能表达自己，又能被别人快速理解。",
+    options: [
+      {
+        label: "回到目录",
+        reply: "继续看看别的部分。",
+        nextId: "intro",
+      },
+    ],
+  },
+  {
+    id: "abilities",
+    text: "我能做的事情通常落在这几个方向上：内容策划、资料整理、专题叙事、AI 辅助创作、网页表达，以及把这些东西组合成一个完整项目。",
+    options: [
+      {
+        label: "继续：你的项目长什么样？",
+        reply: "那你通常会做出怎样的成果？",
+        nextId: "project-shape",
+      },
+      {
+        label: "回到目录",
+        reply: "先回到前面。",
+        nextId: "intro",
+      },
+    ],
+  },
+  {
+    id: "project-shape",
+    text: "我的项目不只是工具演示，更像是一个完整的表达单元。它可能是一份研究档案、一个专题页、一套内容栏目，也可能是一份更好看的网页简历。",
+    options: [
+      {
+        label: "回到目录",
+        reply: "明白了，我再看看别的。",
+        nextId: "intro",
+      },
+    ],
+  },
+  {
+    id: "ai",
+    text: "我不想把 AI 只当作噱头，而是把它当作工作流的一部分。它可以帮助我梳理信息、延展创意、搭建初稿，但最后的判断、审美和表达仍然需要我自己完成。",
+    options: [
+      {
+        label: "回到目录",
+        reply: "这个回答很清楚。",
+        nextId: "intro",
+      },
+    ],
+  },
+  {
+    id: "contact",
+    text: "你可以通过 GitHub、邮箱，或者我后续补充的社交平台联系我。这个站点之后也会继续补充更完整的项目页面和简历内容。",
+    options: [
+      {
+        label: "回到目录",
+        reply: "好，我继续逛逛。",
+        nextId: "intro",
+      },
+    ],
+  },
+];
+
+这里不想写成一份很硬的简历，而是更像一张可以慢慢展开的个人名片。
+
+我希望它至少能回答三件事：
+
+1. 我是谁，我在意什么样的表达与项目。
+2. 我能做什么，以及这些能力会怎样组合成真实成果。
+3. 为什么我会对 AI 项目、内容叙事和网页展示这三件事同时感兴趣。
+
+<AboutDialog
+  client:load
+  title="快速了解我"
+  intro="从下面的问题开始，会比一段平铺直叙的自我介绍更轻松一点。"
+  authorName={aboutAuthorName}
+  authorAvatar={aboutAuthorAvatar}
+  nodes={aboutDialogNodes}
+/>
+
+你之后可以继续修改这个页面，把教育经历、实习、合作项目、获奖和技能结构慢慢加进来。

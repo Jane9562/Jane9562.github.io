@@ -1,132 +1,111 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import {
-  contactLinks,
-  experience,
-  intro,
-  profileNotes,
-  projects,
-  siteMeta,
-  strengths,
-} from "../data/site";
+import Layout from "../layouts/Layout.astro";
+import IndexContent from "../components/IndexContent.astro";
+import Pagination from "../components/Pagination.astro";
+import { getCollection } from "astro:content";
+import themeConfig from "@/theme.config";
+
+// Fetch all posts
+const allPosts = await getCollection("posts");
+
+// Filter out drafts
+const publishedPosts = allPosts.filter((post) => !post.data.draft);
+
+// Separate sticky posts and regular posts
+const stickyPosts = publishedPosts
+  .filter((post) => post.data.sticky === true)
+  .sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+  );
+
+const regularPosts = publishedPosts
+  .filter((post) => !post.data.sticky)
+  .sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+  );
+
+const pageSize = themeConfig.home?.pageSize ?? 10;
+const lastPage = Math.max(1, Math.ceil(regularPosts.length / pageSize));
+const currentPage = 1;
+const pagePosts = regularPosts.slice(0, pageSize);
+
+// Build pagination navigation
+const paginationNavigation = {
+  prevUrl: undefined,
+  nextUrl: lastPage > 1 ? "/page/2/" : undefined,
+};
+
+// Build category list with post counts
+const categoryMap = new Map<
+  string,
+  {
+    name: string;
+    posts: Array<{ title: string; slug: string }>;
+  }
+>();
+
+publishedPosts.forEach((post) => {
+  const categories = post.data.categories || [];
+  categories.forEach((cat) => {
+    if (!categoryMap.has(cat)) {
+      categoryMap.set(cat, {
+        name: cat,
+        posts: [],
+      });
+    }
+    categoryMap.get(cat)!.posts.push({
+      title: post.data.title,
+      slug: post.id,
+    });
+  });
+});
+
+// Transform categories for CategoryCards component
+const categories = Array.from(categoryMap.entries())
+  .filter(([name, _]) =>
+    themeConfig.home?.selectedCategories?.some((cat) => cat.name === name),
+  )
+  .map(([name, data]) => ({
+    name,
+    cover: themeConfig.home?.selectedCategories?.find(
+      (cat) => cat.name === name,
+    )?.cover,
+    url: `/categories/${name}/`,
+    postCount: data.posts.length,
+    posts: data.posts.slice(0, 6).map((p) => ({
+      title: p.title,
+      url: `/posts/${p.slug}/`,
+    })),
+  }))
+  .sort((a, b) => b.postCount - a.postCount);
+
+let pageTitle = themeConfig.home?.title?.customTitle ?? "";
+
+if (themeConfig.home?.title?.behavior === "default") {
+  pageTitle =
+    `${themeConfig.brand?.logo || ""} = ${themeConfig.brand?.title || ""} = ${themeConfig.brand?.subtitle || ""}`.trim();
+}
 ---
 
-<BaseLayout title={`${siteMeta.name} | ${siteMeta.title}`} description={siteMeta.description}>
-  <main class="page-shell">
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">{intro.label}</p>
-        <p class="kicker">{intro.kicker}</p>
-        <h1>{siteMeta.title}</h1>
-        <p class="lead">{intro.summary}</p>
-        <p class="supporting">{intro.detail}</p>
-        <div class="hero-actions">
-          <a href="#projects" class="button button-primary">看项目</a>
-          <a href="#about" class="button button-secondary">了解我</a>
-        </div>
-      </div>
+<Layout
+  pageTitle={pageTitle}
+  indexPage={true}
+  navigation={paginationNavigation}
+>
+  <Fragment slot="head">
+    <meta name="description" content={themeConfig.sidebar?.description} />
+  </Fragment>
 
-      <aside class="hero-card">
-        <p class="card-label">Current focus</p>
-        <h2>{siteMeta.name}</h2>
-        <p>{siteMeta.location}</p>
-        <ul>
-          <li>内容表达与结构整理</li>
-          <li>AI 项目策划与呈现</li>
-          <li>个人品牌与网页叙事</li>
-        </ul>
-      </aside>
-    </section>
-
-    <section class="section-grid" id="about">
-      <div class="section-heading">
-        <p class="eyebrow">About</p>
-        <h2>关于我</h2>
-      </div>
-      <div class="prose-card">
-        {profileNotes.map((item) => <p>{item}</p>)}
-      </div>
-    </section>
-
-    <section class="section-grid" id="services">
-      <div class="section-heading">
-        <p class="eyebrow">What I do</p>
-        <h2>我能做的事情</h2>
-      </div>
-      <div class="strength-grid">
-        {strengths.map((strength) => (
-          <article class="strength-card">
-            <h3>{strength.title}</h3>
-            <p>{strength.text}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="section-grid project-section" id="projects">
-      <div class="section-heading">
-        <p class="eyebrow">Selected Work</p>
-        <h2>精选项目</h2>
-        <p class="section-note">
-          这一部分故意做得更现代一些，用来承接 AI 项目、内容实验和专题型作品。
-        </p>
-      </div>
-      <div class="project-grid">
-        {projects.map((project) => (
-          <article class="project-card">
-            <div class="project-meta">
-              <span>{project.year}</span>
-              <span>{project.type}</span>
-            </div>
-            <h3>{project.title}</h3>
-            <p class="project-summary">{project.summary}</p>
-            <p class="project-detail">{project.detail}</p>
-            <div class="tag-row">
-              {project.tags.map((tag) => (
-                <span class="tag">{tag}</span>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="section-grid" id="resume">
-      <div class="section-heading">
-        <p class="eyebrow">Resume</p>
-        <h2>经历与简历</h2>
-      </div>
-      <div class="timeline">
-        {experience.map((item) => (
-          <article class="timeline-item">
-            <p class="timeline-period">{item.period}</p>
-            <div>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="section-grid contact-section" id="contact">
-      <div class="section-heading">
-        <p class="eyebrow">Contact</p>
-        <h2>联系我</h2>
-      </div>
-      <div class="contact-card">
-        <p>
-          如果你想聊内容策划、AI 项目、合作提案，或者只是想看一看我最近在做什么，可以从这里找到我。
-        </p>
-        <div class="contact-links">
-          {contactLinks.map((link) => (
-            <a href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined}>
-              {link.label}
-            </a>
-          ))}
-        </div>
-        <p class="contact-mail">{siteMeta.email}</p>
-      </div>
-    </section>
-  </main>
-</BaseLayout>
+  <IndexContent
+    posts={pagePosts}
+    stickyPosts={stickyPosts}
+    categories={categories}
+    isFirstPage={true}
+  />
+  <Pagination
+    currentPage={currentPage}
+    lastPage={lastPage}
+    firstPageHref="/"
+    routePrefix="/page"
+  />
+</Layout>
